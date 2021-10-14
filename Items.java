@@ -4,7 +4,5 @@ abstract class Items {
     public String getNombre(){
         return this.nombre;
     }
-
-    abstract void usarItem(Combatientes objetivo);
-    abstract void usarItem(Combatientes emisor, Combatientes receptor);
+    abstract void usarItem(Combatientes receptor);
 }

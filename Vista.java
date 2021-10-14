@@ -131,4 +131,7 @@ public class Vista {
     public void mostrarSaltarRonda(Combatientes c, int ronda){
         prnt(c.nombre + " se ha saltado la ronda " + ronda);
     }
+    public void mostrarItemUsado(String nombre){
+        prnt("Se ha utilizado el item: " + nombre);
+    }
 }

@@ -1,8 +1,8 @@
 public class ShotDeFuerza extends Items{
-    void usarItem(Combatientes objetivo) {
-        objetivo.modificarAtaque(2);
+    public ShotDeFuerza(){
+        this.nombre = "Shot de Fuerza";
     }
-    void usarItem(Combatientes emisor, Combatientes receptor) {
+    void usarItem(Combatientes receptor) {
         receptor.modificarAtaque(2);
     }
 }

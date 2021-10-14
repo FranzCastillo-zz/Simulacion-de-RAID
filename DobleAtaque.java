@@ -1,9 +1,11 @@
 public class DobleAtaque extends Items{
-
-    void usarItem(Combatientes objetivo) {
-        // PUES NO DEBERIA DE HACER NADA TEORICAMENTE
+    private Combatientes emisor;
+    public DobleAtaque(Combatientes emisor){
+        this.nombre = "Doble Ataque";
+        this.emisor = emisor;
     }
-    void usarItem(Combatientes emisor, Combatientes receptor) {
+    void usarItem(Combatientes receptor){
+        emisor.atacar(receptor);
         emisor.atacar(receptor);
     }
 }

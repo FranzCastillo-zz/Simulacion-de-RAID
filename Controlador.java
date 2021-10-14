@@ -113,22 +113,41 @@ public class Controlador {
                     opcionValida = true;
                     break;
                 case 2: // USAR ITEM
-                    /*boolean itemValido = false;
+                    boolean itemValido = false;
                     ArrayList<Items> items = new ArrayList<>();
                     while(!itemValido){
                         items = jugadorActual.getInventario();
                         int posItem = v.mostrarMenuItems(items) - 1; //Devuelve una posicion adelante
                         if(posItem >= 0 && posItem <= items.size()){
+                            Enemigo objetivoItem;
                             Items paraUsar = items.get(posItem);
-                            
-                            //v.mostrarItemUsado(jugador.usarItem(paraUsar));
+                            String nombreClase = paraUsar.getClass().getName(); 
+                            if(nombreClase.equals("DobleAtaque")){
+                                objetivoItem = enemigos.get(v.pedirObjetivo(enemigos) - 1);
+                                paraUsar.usarItem(objetivoItem);
+                                ultimaRonda += "| " + jugadorActual.nombre + " -ATK²> " + objetivoItem.nombre + " | ";
+                            }else if(nombreClase.equals("ShotDeFuerza")){
+                                paraUsar.usarItem(jugadorActual);
+                                ultimaRonda += "| " + jugadorActual.nombre + " -STRENGTH ↑- | ";
+                            }else if(nombreClase.equals("NuevosMusculos")){
+                                paraUsar.usarItem(jugadorActual);
+                                ultimaRonda += "| " + jugadorActual.nombre + " -NEW MSCLS- | ";
+                            }else if(nombreClase.equals("PocionCuracion")){
+                                paraUsar.usarItem(jugadorActual);
+                                ultimaRonda += "| " + jugadorActual.nombre + " -HEAL- | ";
+                            }else if(nombreClase.equals("PocionDebilitar")){
+                                objetivoItem = enemigos.get(v.pedirObjetivo(enemigos) - 1);
+                                paraUsar.usarItem(objetivoItem);
+                                ultimaRonda += "| " + jugadorActual.nombre + " -WEAK'D> " + objetivoItem.nombre + " |";
+                            }
+                            v.mostrarItemUsado(nombreClase);
                             items.remove(paraUsar);
-                            ultimaRonda += "| " + jugadorActual.nombre + " -ITEM> " + objetivo.nombre + " | ";
-                            opcionValida = true;
+                            itemValido = true;
                         }else{
                             v.mostrarOpcionInvalida();
                         }
-                    }*/
+                    }
+                    opcionValida = true;
                     break;
                 case 3: // SALTAR TURNO
                     ultimaRonda += "| " + jugadorActual.nombre + " -SKIP- "  + " | ";

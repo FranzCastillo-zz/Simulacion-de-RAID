@@ -11,8 +11,8 @@ public class Explorador extends Jugador{
         inventario.add(new PocionDebilitar());
         inventario.add(new ShotDeFuerza());
         inventario.add(new ShotDeFuerza());
-        inventario.add(new DobleAtaque());
-        inventario.add(new DobleAtaque());
+        inventario.add(new DobleAtaque(this));
+        inventario.add(new DobleAtaque(this));
         inventario.add(new NuevosMusculos());
     }
 }
