@@ -1,3 +1,5 @@
-public class Variar extends Habilidades{
-    
+public class Variar extends HabilidadesBoss {
+    public void usar(){
+        
+    }
 }

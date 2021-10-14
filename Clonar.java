@@ -1,3 +1,5 @@
-public class Clonar extends Habilidades{
-    
+public class Clonar extends HabilidadesBoss {
+    public void usar(){
+
+    }
 }
