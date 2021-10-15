@@ -4,6 +4,6 @@ public class Patron extends Jefe{
         this.vida = 150;
         this.ataque = 15;
         this.habilidad = new ElSoporte();
-        this.segundaHabilidad = new Terremoto();
+        this.segundaHabilidad = new Terremoto(this);
     }
 }

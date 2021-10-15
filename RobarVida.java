@@ -1,15 +1,12 @@
-import java.util.ArrayList;
-
 public class RobarVida extends Habilidades{
+    Combatientes emisor;
+    public RobarVida(Combatientes emisor){
+        this.emisor = emisor;
+        this.nombre = "Robar vida";
+    }
     public void usar(Combatientes objetivo) {
-        //NADA
-    }
-    public void usar(ArrayList<Combatientes> a) {
-        //NO DEBERIA DE HACER NADA
-    }
-    public void usar(Combatientes emisor, Combatientes receptor){
         int valorAtaque = emisor.getAtaque();
-        receptor.bajarVida(valorAtaque);
+        objetivo.bajarVida(valorAtaque);
         emisor.subirVida(valorAtaque);
     }
 }

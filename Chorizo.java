@@ -3,7 +3,7 @@ public class Chorizo extends Enemigo{
         super("Chorizo");
         this.vida = 100;
         this.ataque = 10;
-        this.habilidad = new RobarVida();
+        this.habilidad = new RobarVida(this);
     }
     
 }

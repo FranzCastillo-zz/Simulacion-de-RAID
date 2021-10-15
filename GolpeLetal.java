@@ -1,14 +1,10 @@
-import java.util.ArrayList;
-
 public class GolpeLetal extends Habilidades{
+    private Combatientes emisor;
+    public GolpeLetal(Combatientes emisor){
+        this.nombre = "Golpe Letal";
+        this.emisor = emisor;
+    }
     public void usar(Combatientes objetivo) {
-        //NADA
+        objetivo.bajarVida(emisor.getAtaque() + 10);
     }
-    public void usar(ArrayList<Combatientes> combatientes) {
-        //NADA
-    }
-    public void usar(Combatientes emisor, Combatientes receptor) {
-        receptor.bajarVida(emisor.getAtaque() + 10);
-    }
-    
 }

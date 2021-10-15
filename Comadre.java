@@ -3,7 +3,7 @@ public class Comadre extends Jefe{
         super("Comadre");
         this.vida = 150;
         this.ataque = 15;
-        this.habilidad = new RobarVida();
-        this.segundaHabilidad = new GolpeLetal();
+        this.habilidad = new RobarVida(this);
+        this.segundaHabilidad = new GolpeLetal(this);
     }
 }

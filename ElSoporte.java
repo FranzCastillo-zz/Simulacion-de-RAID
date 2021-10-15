@@ -1,16 +1,8 @@
-import java.util.ArrayList;
-
 public class ElSoporte extends Habilidades{
+    public ElSoporte(){
+        this.nombre = "El Soporte";
+    }
     public void usar(Combatientes objetivo) {
-        
+        objetivo.subirVida(5);
     }
-    public void usar(ArrayList<Combatientes> combatientes) {
-        for (Combatientes combatiente : combatientes) {
-            combatiente.subirVida(5);
-        }
-    }
-    public void usar(Combatientes emisor, Combatientes receptor) {
-        
-    }
-    
 }

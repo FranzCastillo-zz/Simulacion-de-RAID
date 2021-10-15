@@ -134,4 +134,11 @@ public class Vista {
     public void mostrarItemUsado(String nombre){
         prnt("Se ha utilizado el item: " + nombre);
     }
+    public void mostrarNoMasItems(){
+        prnt("YA NO HAY ITEMS EN EL INVENTARIO");
+    }
+
+    public void mostrarHabilidadUsada(String nombre){
+        prnt("Se ha utilizado la habilidad: " + nombre);
+    }
 }

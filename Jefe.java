@@ -3,5 +3,7 @@ public class Jefe extends Enemigo{
     public Jefe(String nombre) {
         super(nombre);
     }
-    
+    public void usarSegundaHabilidad(Combatientes objetivo){
+        habilidad.usar(objetivo);
+    }
 }

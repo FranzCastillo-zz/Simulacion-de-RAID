@@ -3,6 +3,6 @@ public class K70 extends Enemigo{
         super("K-70");
         this.vida = 120;
         this.ataque = 8;
-        this.habilidad = new GolpeLetal();
+        this.habilidad = new GolpeLetal(this);
     }
 }
