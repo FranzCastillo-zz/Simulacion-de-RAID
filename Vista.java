@@ -68,6 +68,19 @@ public class Vista {
             prnt(jugador.nombre + "\t\t" + jugador.vida + "\t\t" + jugador.ataque);
         }
     }
+    public void mostrarEstadisticasAcompaniantes(ArrayList<Acompaniantes> acompaniantes){
+        prnt("Los acompaniantes se encuentran actualmente con las siguientes estadisticas:");
+        prnt("Nombre\t\tVida\t\tAtaque");
+        for (Acompaniantes acompaniante : acompaniantes) {
+            if(acompaniante != null){
+                if(!acompaniante.isDead()){
+                    prnt(acompaniante.nombre + "\t\t" + acompaniante.vida + "\t\t" + acompaniante.ataque);
+                }else{
+                    prnt(acompaniante.nombre + " regenerandose: Faltan " + acompaniante.getRondasMuerto() + " rondas");
+                }
+            }
+        }
+    }
     public void mostrarHistorial(ArrayList<String> historial){
         prnt("Los ultimos movimientos han sido:");
         for (String string : historial) {
@@ -137,8 +150,42 @@ public class Vista {
     public void mostrarNoMasItems(){
         prnt("YA NO HAY ITEMS EN EL INVENTARIO");
     }
-
     public void mostrarHabilidadUsada(String nombre){
         prnt("Se ha utilizado la habilidad: " + nombre);
+    }
+    public int pedirCantidadNuevosJugadores(){
+        try{
+            prnt("\nIngrese la cantidad de jugadores extra que le acompaniaran: [0-2] Ingresa el numero");
+            int temp = scan.nextInt();
+            scan.nextLine();
+            return temp;
+        }catch(Exception e){
+            scan.next();
+            return -1;
+        }
+    }
+    public void mostrarQueJugadorSeEstaCreando(int numero){
+        prnt("Sistema: Creando al jugador " + numero);
+    }
+    public int pedirObjetivoItem(){
+        try{
+            prnt("\nA quien deseas aplicar el item? (Ingresa el numero)\n");
+            prnt("1. Jugador\n2. Mozzie");
+            int temp = scan.nextInt();
+            scan.nextLine();
+            return temp;
+        }catch(Exception e){
+            scan.next();
+            return -1;
+        }
+    }
+    public void mostrarMascotaRegenerandose(int faltante){
+        prnt("A Mozzie le hacen falta " + faltante + " rondas para poder ser utilizado");
+    }
+    public void mostrarMascotaRegenerada(){
+        prnt("MOZZIE SE HA RECUPERADO");
+    }
+    public void mostrarNingunaMascota(){
+        prnt("No tiene ninguna mascota a la cual aplicar...");
     }
 }
