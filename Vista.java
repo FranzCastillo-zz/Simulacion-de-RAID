@@ -60,6 +60,7 @@ public class Vista {
         for (Enemigo enemigo : enemigos) {
             prnt(enemigo.nombre + "\t\t" + enemigo.vida + "\t\t" + enemigo.ataque);
         }
+        prnt("\n");
     }
     public void mostrarEstadisticasJugadores(ArrayList<Jugador> jugadores){
         prnt("Los jugadores se encuentran actualmente con las siguientes estadisticas:");
@@ -67,21 +68,40 @@ public class Vista {
         for (Jugador jugador : jugadores) {
             prnt(jugador.nombre + "\t\t" + jugador.vida + "\t\t" + jugador.ataque);
         }
+        prnt("\n");
     }
     public void mostrarEstadisticasAcompaniantes(ArrayList<Acompaniantes> acompaniantes){
-        prnt("Los acompaniantes se encuentran actualmente con las siguientes estadisticas:");
-        prnt("Nombre\t\tVida\t\tAtaque");
-        for (Acompaniantes acompaniante : acompaniantes) {
-            if(acompaniante != null){
-                if(!acompaniante.isDead()){
-                    prnt(acompaniante.nombre + "\t\t" + acompaniante.vida + "\t\t" + acompaniante.ataque);
-                }else{
-                    prnt(acompaniante.nombre + " regenerandose: Faltan " + acompaniante.getRondasMuerto() + " rondas");
+        if(!acompaniantes.isEmpty()){
+            prnt("Las mascotas se encuentran actualmente con las siguientes estadisticas:");
+            prnt("Nombre\t\tVida\t\tAtaque");
+            for (Acompaniantes acompaniante : acompaniantes) {
+                if(acompaniante != null){
+                    if(!acompaniante.isDead()){
+                        prnt(acompaniante.nombre + "\t\t" + acompaniante.vida + "\t\t" + acompaniante.ataque);
+                    }else{
+                        prnt(acompaniante.nombre + " regenerandose: Faltan " + acompaniante.getRondasMuerto() + " rondas");
+                    }
                 }
             }
+            prnt("\n");
+        }else{
+            prnt("No hay mascotas en el campo de batalla");
+        }
+    }
+    public void mostrarEstadisticasClones(ArrayList<Enemigo> enemigos){
+        if(!enemigos.isEmpty()){
+            prnt("Los clones del Raid Boss se encuentran actualmente con las siguientes estadisticas:");
+            prnt("Nombre\t\tVida\t\tAtaque");
+            for (Enemigo enemigo : enemigos) {
+                prnt(enemigo.nombre + "\t\t" + enemigo.vida + "\t\t" + enemigo.ataque);
+            }
+            prnt("\n");
+        }else{
+            prnt("No hay clones en el campo de batalla");
         }
     }
     public void mostrarHistorial(ArrayList<String> historial){
+        prnt("\n");
         prnt("Los ultimos movimientos han sido:");
         for (String string : historial) {
             prnt("-" + string);
@@ -187,5 +207,14 @@ public class Vista {
     }
     public void mostrarNingunaMascota(){
         prnt("No tiene ninguna mascota a la cual aplicar...");
+    }
+    public void mostrarClonarFallido(){
+        prnt("CLONAR HA FALLADO!");
+    }
+    public void mostrarHabilidadParaClonar(Habilidades h){
+        prnt("El Raid Boss ahora clonara con " + h.nombre);
+    }
+    public void mostrarClonFallo(Combatientes c){
+        prnt(c.nombre + " ha fallado su habilidad");
     }
 }

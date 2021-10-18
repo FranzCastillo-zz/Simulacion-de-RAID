@@ -1,5 +1,12 @@
+/*
+    NOMBRE: Francisco Javier Castillo Cerna 21562
+    NOMBRE DE LA CLASE: Controlador.java
+        Es el controlador de todo el juego
+*/
+
 import java.util.ArrayList;
 import java.util.Random;
+
 public class Controlador {
     private Vista v;
     private ArrayList<String> historial;
@@ -10,6 +17,8 @@ public class Controlador {
     private RaidBoss raidBoss;
     private ArrayList<Acompaniantes> acompaniantes;
     private Acompaniantes mascotaActual;
+    private ArrayList<Enemigo> clones;
+    private Enemigo clonActual;
     private int ronda;
 
     public Controlador(){
@@ -19,10 +28,17 @@ public class Controlador {
         jugadores = new ArrayList<>();
         enemigos = new ArrayList<>();
         acompaniantes = new ArrayList<>();
+        clones = new ArrayList<>();
         historial.add("");
         historial.add("");
         historial.add("");
     }
+    
+    /** 
+     * @param min Limite inferior
+     * @param max Limite superior
+     * @return int Random
+     */
     private static int randomEntre(int min, int max) {
         Random rand = new Random();
 		return rand.nextInt((max - min) + 1) + min;
@@ -61,6 +77,11 @@ public class Controlador {
         jugadores.add(creado);
         v.mostrarSaludo(creado);
     }
+    
+    /** 
+     * @param li Cantidad minima
+     * @param ls Cantidad maxima
+     */
     private void crearEnemigos(int li, int ls){
         int numEnemigos = randomEntre(li, ls);
         int probabilidadJefe = randomEntre(0, 100);
@@ -87,6 +108,10 @@ public class Controlador {
             v.mostrarSaludo(enemigo);
         }
     }
+    
+    /** 
+     * @return int posicion del enemigo en el Array
+     */
     private int encontrarNumObjetivo(){
         int numObjetivo = -1;
         boolean objetivoValido = false;
@@ -100,6 +125,11 @@ public class Controlador {
         }    
         return numObjetivo;
     }
+    
+    /** 
+     * @param objetivo a quien se verificara su muerte
+     * @param numObjetivo su numero en el array
+     */
     private void verificarMuerte(Combatientes objetivo, int numObjetivo){
         if(objetivo.getVida() <= 0){ //Se muere
             enemigos.remove(numObjetivo);
@@ -107,6 +137,11 @@ public class Controlador {
             ultimaRonda += "| " + jugadorActual.nombre + " -KILL> " + objetivo.nombre + " | ";
         }
     }
+    
+    /** 
+     * @param actual El jugador a verificar
+     * @param numJugador el numero en el array
+     */
     private void verificarMuerteJugador(Jugador actual, int numJugador){
         if(actual.getVida() <= 0 && actual != null){ //Se muere
             if(!jugadores.isEmpty()){
@@ -132,6 +167,10 @@ public class Controlador {
         int numObjetivo = randomEntre(0, acompaniantes.size() - 1);
         mascotaActual = acompaniantes.get(numObjetivo);
     }
+    
+    /** 
+     * @param enemigo el enemigo que atacara al jugador
+     */
     private void enemigoAtacaJugador(Enemigo enemigo){
         int jugadorOMascota = randomEntre(0, 100);
         escogerJugadorObjetivoEnemigo();
@@ -159,6 +198,10 @@ public class Controlador {
         }
         
     }
+    
+    /** 
+     * @param enemigo el enemigo que utilizara la habilidad
+     */
     private void enemigoUsaHabilidad(Enemigo enemigo){
         int jugadorOMascota = randomEntre(0, 100);
         String nombreClase = "";
@@ -209,6 +252,10 @@ public class Controlador {
         verificarMuerteJugador(jugadorActual, 0);
         v.mostrarHabilidadUsada(nombreClase);    
     }
+    
+    /** 
+     * @param objetivo el objetivo, que primero ataco el Asociado de la mascota, al que se atacara de nuevo
+     */
     private void turnoMascota(Combatientes objetivo){
         if(mascotaActual != null){
             if(mascotaActual.getRondasMuerto() == 0){
@@ -219,10 +266,18 @@ public class Controlador {
             }
         }
     }
+    
+    /** 
+     * @param enemigo el enemigo que saltara turno
+     */
     private void enemigoSaltaTurno(Enemigo enemigo){
         ultimaRonda += "| " + enemigo.nombre + " -SKIP- "  + " | ";
         v.mostrarSaltarRonda(enemigo, ronda);
     }
+    
+    /** 
+     * @param enemigo el jefe que utilizara su segunda habilidad
+     */
     private void jefeUsaSegundaHabilidad(Jefe enemigo){
         int jugadorOMascota = randomEntre(0, 100);
         String nombreClase = "";
@@ -285,6 +340,10 @@ public class Controlador {
             verificarMuerte(objetivo, numObjetivo);
         }
     }
+    
+    /** 
+     * @return boolean si se ha podido utilizar el item
+     */
     private boolean jugadorUtilizaItem(){
         boolean fuePosible = false;
         boolean itemValido = false;
@@ -456,27 +515,29 @@ public class Controlador {
     }
     private void turnoEnemigo(){
         for (Enemigo enemigo : enemigos) {
-            String n = enemigo.getClass().getName();
-            int opcion = randomEntre(0, 100);
-            if(n.equals("Comadre") || n.equals("Patron")){
-                if(opcion < 50){
-                    enemigoAtacaJugador(enemigo);
-                }else if(opcion <= 50 && opcion <= 65){
-                    enemigoUsaHabilidad(enemigo);
-                }else if(opcion <= 65 && opcion <= 80){
-                    jefeUsaSegundaHabilidad((Jefe)enemigo);
+            if(!enemigo.nombre.equals("INFERNO: El devora-almas")){
+                String n = enemigo.getClass().getName();
+                int opcion = randomEntre(0, 100);
+                if(n.equals("Comadre") || n.equals("Patron")){
+                    if(opcion < 50){
+                        enemigoAtacaJugador(enemigo);
+                    }else if(opcion <= 50 && opcion <= 65){
+                        enemigoUsaHabilidad(enemigo);
+                    }else if(opcion <= 65 && opcion <= 80){
+                        jefeUsaSegundaHabilidad((Jefe)enemigo);
+                    }else{
+                        enemigoSaltaTurno(enemigo);
+                    }
                 }else{
-                    enemigoSaltaTurno(enemigo);
+                    if(opcion < 50){ //Atacar al jugador
+                        enemigoAtacaJugador(enemigo);
+                    }else if(opcion >= 50 && opcion <= 70){ //HABILIDAD 50-70
+                           enemigoUsaHabilidad(enemigo);
+                    }else{ // saltar turno
+                        enemigoSaltaTurno(enemigo);
+                    }
+        
                 }
-            }else{
-                if(opcion < 50){ //Atacar al jugador
-                    enemigoAtacaJugador(enemigo);
-                }else if(opcion >= 50 && opcion <= 70){ //HABILIDAD 50-70
-                       enemigoUsaHabilidad(enemigo);
-                }else{ // saltar turno
-                    enemigoSaltaTurno(enemigo);
-                }
-    
             }
         }
     }
@@ -544,12 +605,102 @@ public class Controlador {
         enemigos.add(raidBoss);
         v.mostrarSaludo(raidBoss);
     }
-    
+    private void turnoClones(){
+        int tipoObjetivo = randomEntre(0, 100);
+        int numObjetivo;
+        if(tipoObjetivo <= 50){ //JUGADOR
+            numObjetivo = randomEntre(0, jugadores.size() - 1);
+            Jugador obj = jugadores.get(numObjetivo);
+            clonActual.usarHabilidad(obj);
+            ultimaRonda += "| " + clonActual.nombre + " -ATK> " + obj.nombre + " | ";
+            verificarMuerteJugador(obj, numObjetivo);
+        }else{ //MASCOTAS
+            numObjetivo = randomEntre(0, acompaniantes.size()-1);
+            mascotaActual = acompaniantes.get(numObjetivo);
+            if(mascotaActual != null){
+                clonActual.usarHabilidad(mascotaActual);
+                ultimaRonda += "| " + clonActual.nombre + " -ATK> " + mascotaActual.nombre + " | ";
+                verificarMuerteMascota();
+            }else{
+                v.mostrarClonFallo(clonActual);
+            }
+        }    
+    }
+
+    private void turnoRaidBoss(){
+        boolean opcionValida = false;
+        while(!opcionValida){
+            int opcion = randomEntre(0, 105);
+            if(opcion >= 0 && opcion < 15){ // Atacar 15
+                enemigoAtacaJugador(raidBoss);
+                opcionValida = true;
+            }else if(opcion >= 15 && opcion < 30){ //Primera habilidad
+                if(clones.isEmpty()){
+                    enemigoUsaHabilidad(raidBoss);
+                }else{
+                    turnoClones();
+                }
+                opcionValida = true;
+            }else if(opcion >= 30 && opcion < 45){ // Segunda habilidad
+                if(clones.isEmpty()){
+                    jefeUsaSegundaHabilidad(raidBoss);
+                }else{
+                    turnoClones();
+                }
+                opcionValida = true;
+            }else if(opcion >= 45 && opcion < 60){ // Skip
+                enemigoSaltaTurno(raidBoss);
+            }else if(opcion >= 60 && opcion < 75){ // Clonar
+                boolean clonarValido = false;
+                int i = 0;
+                while(!clonarValido && i < 5){
+                    int clonarA = randomEntre(0, 100);
+                    if(clonarA < 50){ //CLONAR A MASCOTA
+                        if(!acompaniantes.isEmpty()){
+                            clonarA = randomEntre(0, acompaniantes.size() - 1);
+                            Acompaniantes paraClonar = acompaniantes.get(clonarA);
+                            if(!paraClonar.isDead()){
+                                clones = raidBoss.clonar(paraClonar);
+                                clonarValido = true;
+                                ultimaRonda += "| " + raidBoss.nombre + " -CLONED> " + paraClonar.nombre + " | ";
+                            }
+                        }
+                    }else{ //clonar enemigo
+                        if(enemigos.size() > 1){ //QUE HAYA ALGUIEN MAS QUE EL RAIDBOSS
+                            clonarA = randomEntre(0, enemigos.size() - 1);
+                            Enemigo paraClonar = enemigos.get(clonarA);
+                            if(!paraClonar.getClass().getName().equals("RaidBoss")){
+                                clones = raidBoss.clonar(paraClonar);
+                                clonarValido = true;
+                                ultimaRonda += "| " + raidBoss.nombre + " -CLONED> " + paraClonar.nombre + " | ";
+                            }
+                        }
+                    }
+                    i++;
+                }
+                if(!clonarValido){
+                    v.mostrarClonarFallido();
+                    opcionValida = true;
+                }
+                opcionValida = true;
+            }else if(opcion >= 75 && opcion < 90){ // Variar
+                v.mostrarHabilidadParaClonar(raidBoss.variar());
+                ultimaRonda += "| " + raidBoss.nombre + " -VARY- | ";
+                opcionValida = true;
+            }else if(opcion >= 90 && opcion <= 105){ //liberar
+                clones.clear();
+                raidBoss.setClones(clones);
+                ultimaRonda += "| " + raidBoss.nombre + " -FREE'D- ALL CLONES| ";
+                opcionValida = true;
+            }
+        }
+    }
     
     private void jugarRAID(){
         ultimaRonda = "";
         v.mostrarNumeroDeRonda(ronda);
         v.mostrarEstadisticasEnemigos(enemigos);
+        v.mostrarEstadisticasClones(clones);
         v.mostrarEstadisticasJugadores(jugadores);
         v.mostrarEstadisticasAcompaniantes(acompaniantes);
         //TURNO DEL JUGADOR
@@ -560,6 +711,14 @@ public class Controlador {
         }
         //TURNO ENEMIGOS
         turnoEnemigo();
+        //TURNO RAID BOSS
+        turnoRaidBoss();
+        //TURNO CLONES
+        clones = raidBoss.getClones();
+        for (Enemigo clon : clones) {
+            clonActual = clon;
+            turnoClones();
+        }
         //FIN
         finDeRonda();
     }
